@@ -49,3 +49,7 @@ module.exports.CategoriesModel = CategoriesModel;
 
 //// mongoimport --db categories_db --collection CategoriesModel --type csv --headerline --file /Users/apple/george-categories-component/database/clips.txt
 // mongoimport -d categories_db -c CategoriesModel --type csv --file /Users/apple/george-categories-component/database/clips.txt --headerline;
+
+// mongoimport  -d categories_db -c CategoriesModel --type csv --file /Users/apple/george-categories-component/database/clips.txt --headerline;
+
+// scp -i /Users/apple/Downloads/sdc_web_server.pem /Users/apple/george-categories-component/database/clips.txt ubuntu@ec2-13-57-33-81.us-west-1.compute.amazonaws.com:/

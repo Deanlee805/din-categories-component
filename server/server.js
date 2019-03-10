@@ -1,4 +1,4 @@
-// const nb = require('newrelic');
+const nb = require('newrelic');
 const express = require(`express`);
 const app = express();
 const bodyParser = require(`body-parser`);
@@ -9,7 +9,7 @@ const redis = require('redis');
 const db = require('../databaseNoSQL/db'); //mongo
 // const db = require('../databasePostgre/db'); //PostgreSQL
 const client = redis.createClient();
-const proxy = require('http-proxy-middleware')
+// const proxy = require('http-proxy-middleware')
 
 
 app.use(cors());
@@ -17,59 +17,24 @@ app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/../public`));
 app.use(responseTime());
 
-app.use(proxy('/recent-broadcasts', {
-  target: 'http://ec2-13-56-139-244.us-west-1.compute.amazonaws.com:3000'
-}));
-app.use(proxy('/recent-highlights', {
-  target: 'http://ec2-13-56-139-244.us-west-1.compute.amazonaws.com:3000'
-}));
-app.use(proxy('/popular-clips', {
-  target: 'http://ec2-13-56-139-244.us-west-1.compute.amazonaws.com:3000'
-}));
+// app.use(proxy('/recent-broadcasts', {
+//   target: 'http://ec2-13-56-139-244.us-west-1.compute.amazonaws.com:3000'
+// }));
+// app.use(proxy('/recent-highlights', {
+//   target: 'http://ec2-13-56-139-244.us-west-1.compute.amazonaws.com:3000'
+// }));
+// app.use(proxy('/popular-clips', {
+//   target: 'http://ec2-13-56-139-244.us-west-1.compute.amazonaws.com:3000'
+// }));
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // mongo
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// const getClips = (req, res) => {
-//   db.CategoriesModel.find()
-//     // .sort({
-//     //   created_at: -1,
-//     //   view_count: -1
-//     // })
-//     .limit(8)
-//     .exec((err, data) => {
-//       if (err) {
-//         console.log(err);
-//         res.status(404).end();
-//       }
-//       // console.log('data>>>', data);
-//       const clipsData = JSON.stringify(data[1])
-//       client.set('clips', 3, clipsData);
-//       res.json(data);
-//     })
-
-// }
-
-// const getCache = (req, res) => {
-//   //Check the cache data from the server redis
-//   client.get('clips', (err, result) => {
-//     if (result) {
-//       console.log(result)
-//       res.send(result);
-//     } else {
-//       getClips(req, res);
-//     }
-//   });
-// }
 
 app.get('/recent-broadcasts', (req, res) => {
   //db.CategoriesModel.find({}).sort({created_at: -1, view_count: -1}).limit(10)
   db.CategoriesModel.find()
-    // .sort({
-    //   created_at: -1,
-    //   view_count: -1
-    // })
     .limit(8)
     .exec((err, data) => {
       if (err) {
